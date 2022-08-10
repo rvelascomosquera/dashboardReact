@@ -1,38 +1,119 @@
-.App {
-  text-align: center;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; 
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  overflow: hidden; 
+  background-color: azure;
+  color: #1f0d53;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.box {
+  width: 90vw;
+  height: 90vh;
+  border-radius: 20px;
+  box-shadow: 0px 2px 5px 4px rgba(0,0,0,0.2);
+  display: flex;
+  gap: 2px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.navbar {
+  padding: 1rem 2rem;
+  border-radius: 0px 20px 0 0 ;
+  width: 100%;
+  border-bottom: 2px solid black;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;  
+  gap: 2px 0px;
+}
+
+.content__box {
+  display: flex;
+  height: 100%;  
+  width: 100%;
+  border-radius: 20px;
+  gap: 15px;
+}
+
+.content__info{
+  width: 70%;
+  border: 1px solid rgb(237, 237, 245);
+  padding: 20px;
+}
+
+
+.sidebar__option {
+  list-style: none;
+  width: 100%;
+}
+
+.sidebar__item {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.sidebar__item__link {
+  text-decoration: none;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 8px 40px;
+  font-size: 1.2rem;
+}
+
+.active {
+  background-color: brown;
+  color: #fff;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.siderbar__icon {
+  margin-right: 10px;
+  font-size: 1.4rem;
+}
+
+.sidebar {
+  width: 15rem;   
+  border-radius: 20px 8px 5px 20px;
+  border: 1px solid rgb(237, 237, 245);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 90px 0;
+  gap: 40px;
 }
 
-.App-link {
-  color: #61dafb;
+.siderbar__avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 100px;
+  border: 1px solid brown;
+  object-fit: cover;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.siderbar__avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 100px;
+}
+
+.project {
+  width: 400px;
+  height: 100%;
+  text-align: center;
+  padding: 25px;
+  border: 1px solid rgb(237, 237, 245);
+  border-radius: 0 0 20px 0;
 }
