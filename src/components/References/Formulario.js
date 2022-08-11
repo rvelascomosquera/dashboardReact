@@ -1,99 +1,124 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import db from './../Firebase/FirebaseConfig'
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, updateDoc, doc } from "firebase/firestore";
 
-const Formulario = () => {
 
-  const [nombre, setNombre] = useState('')
-  const [email, setEmail] = useState('')
-  const [cargo, setCargo] = useState('')
-  const [empresa, setEmpresa] = useState('')
-  const [direccion, setDireccion] = useState('')
-  const [ciudad, setCiudad] = useState('')
-  const [celular, setCelular] = useState('')
+const Formulario = ({ initData, finishEdit }) => {
 
-  const onSubmitReferencia = async(e) => {
-    e.preventDefault();
+  const initDataState = {
+    nombre: '',
+    email: '',
+    cargo: '',
+    empresa: '',
+    direccion: '',
+    ciudad: '',
+    celular: ''
+  }
+
+  const [editMode, setEditMode] = useState(false);
+
+  useEffect(() => {
+    if (initData) {
+      setData(initData);
+      setEditMode(true);
+    }
+  // eslint-disable-next-line
+  }, []);
+
+  const [data, setData] = useState(initDataState);
+
+  const createReference = async() => {
     try {
-      await addDoc(collection(db, 'Referencias'),{
-        nombre: nombre,
-        email: email,
-        cargo: cargo,
-        empresa: empresa,
-        direccion: direccion,
-        ciudad: ciudad,
-        celular: celular
-      });
+      await addDoc(collection(db, 'Referencias'), data);
     } catch (error) {
       alert('error al guardar los datos')
       console.log(error)
     } 
+    setData(initDataState);
+  }
 
-    setNombre('');
-    setEmail('');
-    setCargo('');
-    setEmpresa('');
-    setDireccion('');
-    setCiudad('');
-    setCelular('');
+  const updateReference = async() => {
+    try {
+      await updateDoc(doc(db, 'Referencias', initData.id), data);
+    } catch (error) {
+      console.log(error)
+    }
+    finishEdit();
+  }
+
+  function onChange(e) {
+    console.log(e);
+    setData({
+      ...data,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  function onSubmit(e) {
+    e.preventDefault();
+    if (editMode) {
+      updateReference();
+    } else {
+      createReference();
+    }
   }
 
   return ( 
-    <form action="" className="referencias" onSubmit={onSubmitReferencia}>
-      <h3>Crea una Referencia</h3>
+    <form className="referencias" onSubmit={(e) => onSubmit(e)}>
+      <h3>{ editMode ? 'Editar Referencia' : 'Crea una Referencia' }</h3>
       <input
         type="text"
         name="nombre"
-        value={nombre}
-        onChange={(e) => setNombre(e.target.value)}
+        value={data.nombre}
+        onChange={(e) => onChange(e)}
         placeholder="Nombre" 
         required
       />
       <input
         type="text"
         name="cargo"
-        value={cargo}
-        onChange={(e) => setCargo(e.target.value)}
+        value={data.cargo}
+        onChange={(e) => onChange(e)}
         placeholder="Cargo" 
       />
       <input
         type="text"
-        name="Empresa"
-        value={empresa}
-        onChange={(e) => setEmpresa(e.target.value)}
+        name="empresa"
+        value={data.empresa}
+        onChange={(e) => onChange(e)}
         placeholder="Empresa" 
       />
       <input
         type="text"
-        name="Direccion"
-        value={direccion}
-        onChange={(e) => setDireccion(e.target.value)}
+        name="direccion"
+        value={data.direccion}
+        onChange={(e) => onChange(e)}
         placeholder="Direccion" 
       />
       <input
         type="text"
-        name="Ciudad"
-        value={ciudad}
-        onChange={(e) => setCiudad(e.target.value)}
+        name="ciudad"
+        value={data.ciudad}
+        onChange={(e) => onChange(e)}
         placeholder="Ciudad" 
         required
       />
       <input
         type="text"
         name="celular"
-        value={celular}
-        onChange={(e) => setCelular(e.target.value)}
+        value={data.celular}
+        onChange={(e) => onChange(e)}
         placeholder="Celular"
         required 
       />
       <input
         type="email"
         name="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        value={data.email}
+        onChange={(e) => onChange(e)}
         placeholder="Correo@correo.com" 
       />
-      <button type="submit" >Agregar</button>
+    <button type="submit">{ editMode ? 'Editar' : 'Agregar' }</button>
     </form>
    );
 }
