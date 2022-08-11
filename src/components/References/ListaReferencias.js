@@ -25,7 +25,6 @@ const ListaReferencias = () => {
 
     );
   }, [])
-  
 
   return ( 
     <div>
@@ -33,15 +32,8 @@ const ListaReferencias = () => {
       <div className="list__reference">
         {refencia.map((newReferencia) => (
           <ItemReferencia 
-          key={newReferencia.id}
-          id={newReferencia.id}
-          nombre={newReferencia.nombre}
-          email={newReferencia.email}
-          cargo={newReferencia.cargo}
-          empresa={newReferencia.empresa}
-          direccion={newReferencia.direccion}
-          ciudad={newReferencia.ciudad}
-          celular={newReferencia.celular}     
+            initData={newReferencia}
+            key={newReferencia.id}
           />
         ))}
       </div>

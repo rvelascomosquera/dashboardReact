@@ -8,6 +8,7 @@ const References = () => {
     <div className="page__references">
       <h1>Mis Referencias</h1>
       <Formulario />
+      <hr></hr>
       <ListaReferencias />
     </div>
   );
